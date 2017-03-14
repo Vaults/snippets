@@ -77,7 +77,6 @@ function boolfuck(c, input = "") {
     output = '';
     mem = {"0": 0};
     inp = toEnd(input);
-    console.log(input, toEnd(input), fromEnd(toEnd(input).join('')));
 
     //run through
     var c = 0;
@@ -89,3 +88,5 @@ function boolfuck(c, input = "") {
 
     return fromEnd(output);
 }
+
+export {boolfuck}

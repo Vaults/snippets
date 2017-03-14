@@ -2,7 +2,6 @@
  * Created by Marcel on 11-3-2017.
  */
 function interpret(code) {
-    console.log(JSON.stringify(code));
     code = code.split('\n').map(o=>o.split(''));
     var xMax = Math.max.apply(null, code.map(o=>o.length));
     var yMax = code.length;
@@ -55,10 +54,11 @@ function interpret(code) {
             if(p == ","){output += String.fromCharCode(stack.pop());}
             if(p == "#"){move();}
             if(p == 'a'){stack.push(10)}
-            if(p == "p"){y = stack.pop(); x = stack.pop(); v = stack.pop(); code[y][x] = String.fromCharCode(v);}
-            if(p == "g"){y = stack.pop(); x = stack.pop(); stack.push(code[y][x].charCodeAt(0))}
+            if(p == "p"){code[stack.pop()][stack.pop()] = String.fromCharCode(stack.pop()); }
+            if(p == "g"){stack.push(code[stack.pop()][stack.pop()].charCodeAt(0))}
         }
         move();
     }
     return output;
 }
+export {interpret}
