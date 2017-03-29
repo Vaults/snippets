@@ -7,7 +7,7 @@ import assert from 'assert';
 
 //from Codewars
 describe("Boolfuck", function () {
-    it("should work for the \"Hello World\" program provided on the official website", function () {
+    it("should work for the 'Hello World' program provided on the official website", function () {
         assert.equal(boolfuck(`;;;+;+;;+;+;
 +;+;+;+;;+;;+;
 ;;+;;+;+;;+;

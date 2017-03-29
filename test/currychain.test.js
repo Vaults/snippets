@@ -1,11 +1,11 @@
 import {createCrazyCurry} from '../src/currychain.js';
 import assert from 'assert';
 
-var add = createCrazyCurry((p,n)=>p+n,0);
-var mul = createCrazyCurry((p,n)=>p*n,1);
-var min = createCrazyCurry((p,n)=>p-n,1);
-var concat = createCrazyCurry((p,n)=>p+n,'');
-var compose = createCrazyCurry((p,n)=>(typeof n == 'function')?n(p):n);
+const add = createCrazyCurry((p,n)=>p+n,0);
+const mul = createCrazyCurry((p,n)=>p*n,1);
+const min = createCrazyCurry((p,n)=>p-n,1);
+const concat = createCrazyCurry((p,n)=>p+n,'');
+const compose = createCrazyCurry((p,n)=>(typeof n === 'function')?n(p):n);
 
 describe('Crazy currying', ()=>{
     it('mathematical adding works', ()=>{
@@ -21,5 +21,5 @@ describe('Crazy currying', ()=>{
     });
     it('Very nested crazy-ass curries', ()=>{
         assert.equal(+concat([[]],[],[min([[]],[],[~~min([[]],[],[mul([[]],[],[[4].concat([[]],[],[mul([[]],[],[add([[]],[],[add([[]],[],[3,mul([[]],[],[124,[44,-3.2]]) - mul([[]],[],[2000,min([[]],[],[9,1])])])])])])]),-2170])])-1,2]).valueOf() + 27,69);
-    })
+    });
 });
