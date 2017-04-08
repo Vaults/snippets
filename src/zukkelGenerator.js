@@ -21,4 +21,8 @@ const zukkelGenerator = () => {
 
     return ((prefix)?prefix+' ':'') + start + mid + last + ((suffix)?' '+suffix:'');};
 
+if(window) {
+    window.zukkel = zukkelGenerator;
+}
+
 export {generateWordCombo, pickRandom, zukkelGenerator};
