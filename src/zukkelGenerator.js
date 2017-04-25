@@ -21,7 +21,7 @@ const zukkelGenerator = () => {
 
     return ((prefix)?prefix+' ':'') + start + mid + last + ((suffix)?' '+suffix:'');};
 
-if(window) {
+if(typeof window !== "undefined") {
     window.zukkel = zukkelGenerator;
 }
 

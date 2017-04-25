@@ -49,7 +49,7 @@ function interpret(code) {
             if(p === '_'){dir = dirs[(stack.pop() == 0)?'R':'L']}
             if(p === '|'){dir = dirs[(stack.pop() == 0)?'D':'U']}
             if(p === '"'){strMode = true;}
-            if(p === ":"){if(stack.length === 0){stack.push(0);}else{var t = stack.pop(); stack.push(t); stack.push(t);}}
+            if(p === ":"){if(stack.length === 0){stack.push(0);}else{const t = stack.pop(); stack.push(t); stack.push(t);}}
             if(p === '\\'){if(stack.length === 1){stack.unshift(0);} stack=stack.concat([stack.pop(),stack.pop()]);}
             if(p === "$"){stack.pop();}
             if(p === "."){output += stack.pop();}

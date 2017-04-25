@@ -22,10 +22,4 @@ describe('ZukkelGenerator', function(){
             assert.isTrue(['ab', 'ba', 'aa', 'bb', 'a', 'b', ''].indexOf(combo) >= 0 || combo === '');
         }, 100);
     });
-    it('generates a zukkel', function(){
-        doNTimes(() => {
-            const zuk = zukkelGenerator();
-            assert.isOk(zuk);
-        }, 100);
-    })
 });
