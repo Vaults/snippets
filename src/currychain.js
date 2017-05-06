@@ -5,7 +5,7 @@ function createCrazyCurry(red, redInit) {
         const f = (...x) => ret([calc(n)].concat(x));
         f.valueOf = () => calc(n);
         return f;
-    }
+    };
     return ret;
 }
 export {createCrazyCurry}

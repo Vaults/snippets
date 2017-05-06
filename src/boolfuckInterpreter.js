@@ -15,7 +15,6 @@ const fromEnd = out => (out.match(/.{1,8}/g) || [] ).map(o=>String.fromCharCode(
 //executes commands
 const interpret = () => {
     const command = code.charAt(pointer);
-    //console.log(accessMem(), command, pointer);
     if (command === ">") {
         dataPointer++;
     } else if (command === "<") {
@@ -70,7 +69,7 @@ function modMem() {
 
 
 function boolfuck(c, input = "") {
-    //init constiables
+    //init constants
     code = c;
     dataPointer = 0;
     pointer = 0;
