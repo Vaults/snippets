@@ -17,6 +17,7 @@ describe('Collatztest', ()=>{
     it('computes correctly according to some precomputed values', () => {
         collatzArr.forEach((o,i) => {
             assert.equal(collatz(i + 1), o);
-        })
-    })
+        });
+    });
+
 });

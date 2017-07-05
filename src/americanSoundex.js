@@ -20,10 +20,10 @@ const valMap = {
     "l":4,
     "m":5,
     "n":5,
-    "r":6,
+    "r":6
 };
 const remWithoutFirst = (s, r) => {
-    return s.charAt(0) + s.slice(1).replace(r,'');
+    return s.charAt(0) + s.slice(1).replace(r,"");
 };
 
 const soundex = str => {
@@ -31,15 +31,15 @@ const soundex = str => {
             const firstLetter = word.charAt(0);
             word = remWithoutFirst(
                     remWithoutFirst(word, /[hw]/g)
-                    .split('')
+                    .split("")
                     .map(o => (valMap[o.toLowerCase()] || o))
-                    .join('')
-                    .replace(/(\d)\1+/g,'$1')
+                    .join("")
+                    .replace(/(\d)\1+/g,"$1")
                 ,/[aeiouyAEIOUY]/g);
 
             if(word.match(/^\d/)){word = firstLetter + word.substring(1);}
 
-            return word.substr(0,4) + ((word.length < 4)?"0".repeat(4 - word.length):'');
+            return word.substr(0,4) + ((word.length < 4)?"0".repeat(4 - word.length):"");
         })
         .join(" ")
         .toUpperCase();

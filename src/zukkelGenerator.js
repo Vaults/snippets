@@ -13,13 +13,13 @@ const generateWordCombo = (a, n) => {
 };
 
 const zukkelGenerator = () => {
-    const prefix = generateWordCombo(['super', 'le', 'mega', 'turbo', 'plebeiaanse', 'proleetse', 'schattige', 'gigantisch'], 1);
-    const start = generateWordCombo(["suk", "zuk", "zok", "zek", 'zik', 'soek', 'sok'], 2);
-    const mid = generateWordCombo(['kel', 'zuk', 'drol', 'gek', 'poeperd', 'lieverd', 'kol', 'kil', 'kul'], 3);
-    const last = generateWordCombo(['inhio', 'ulus maximus', 'etteje', 'pukkel', 'tje', 'kie'], 1);
-    const suffix = generateWordCombo(['💩', '🙅‍♂', '🗿', '👅'], 1);
+    const prefix = generateWordCombo(["super", "le", "mega", "turbo", "plebeiaanse", "proleetse", "schattige", "gigantisch"], 1);
+    const start = generateWordCombo(["suk", "zuk", "zok", "zek", "zik", "soek", "sok"], 2);
+    const mid = generateWordCombo(["kel", "zuk", "drol", "gek", "poeperd", "lieverd", "kol", "kil", "kul"], 3);
+    const last = generateWordCombo(["inhio", "ulus maximus", "etteje", "pukkel", "tje", "kie"], 1);
+    const suffix = generateWordCombo(["💩", "🙅‍♂", "🗿", "👅"], 1);
 
-    return ((prefix)?prefix+' ':'') + start + mid + last + ((suffix)?' '+suffix:'');};
+    return ((prefix)?prefix+" ":"") + start + mid + last + ((suffix)?" "+suffix:"");};
 
 if(typeof window !== "undefined") {
     window.zukkel = zukkelGenerator;

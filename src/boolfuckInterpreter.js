@@ -10,8 +10,8 @@ const pad = (o) => {
     }
     return o;
 };
-const toEnd = input => [].concat.apply([], input.split('').reverse().map(o=>pad(o.charCodeAt(0).toString(2)).split('')));
-const fromEnd = out => (out.match(/.{1,8}/g) || [] ).map(o=>String.fromCharCode(parseInt(o, 2))).reverse().join('');
+const toEnd = (input) => [].concat.apply([], input.split("").reverse().map((o)=>pad(o.charCodeAt(0).toString(2)).split("")));
+const fromEnd = (out) => (out.match(/.{1,8}/g) || [] ).map((o)=>String.fromCharCode(parseInt(o, 2))).reverse().join("");
 //executes commands
 const interpret = () => {
     const command = code.charAt(pointer);
@@ -43,10 +43,10 @@ function find(left) {
 
     while (bc > 0) {
         m += dir;
-        if (code.charAt(pointer + m) === '[') {
+        if (code.charAt(pointer + m) === "[") {
             bc += dir;
         }
-        if (code.charAt(pointer + m) === ']') {
+        if (code.charAt(pointer + m) === "]") {
             bc -= dir;
         }
     }
@@ -61,7 +61,7 @@ function accessMem() {
     return mem[dataPointer];
 }
 function storeMem(inp) {
-    mem[dataPointer] = (typeof inp === 'undefined') ? 0 : inp;
+    mem[dataPointer] = (typeof inp === "undefined") ? 0 : inp;
 }
 function modMem() {
     storeMem(((accessMem() == 0) ? 1 : 0));
@@ -73,7 +73,7 @@ function boolfuck(c, input = "") {
     code = c;
     dataPointer = 0;
     pointer = 0;
-    output = '';
+    output = "";
     mem = {"0": 0};
     inp = toEnd(input);
 
