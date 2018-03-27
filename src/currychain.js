@@ -1,10 +1,13 @@
-function createCrazyCurry(red, redInit) {
-    const ret = function (...n) {
-        const flat = (data) => data.reduce((r, e) => Array.isArray(e) ? r.concat(flat(e)) : r.push(e) && r, []);
-        const calc = (a) => (!a.reduce) ? [a] : flat(a).reduce(red, redInit);
-        const f = (...x) => ret([calc(n)].concat(x));
-        f.valueOf = () => calc(n);
-        return f;
+const isArray = Array.isArray;
+const deepFlatten = (arr) => arr.reduce((acc, elt) => acc.concat(isArray(elt) ? deepFlatten(elt) : elt), []);
+const reduceDeep  = (arr, f, init) => (isArray(arr)) ? deepFlatten(arr).reduce(f, init) : arr;
+
+function createCrazyCurry(reduceFunction, reduceInit) {
+    const ret = function (...args) {
+        const reducedValue = reduceDeep(args, reduceFunction, reduceInit);
+        const curriedFunction = (...newArgs) => ret(reducedValue, newArgs);
+        curriedFunction.valueOf = () => reducedValue;
+        return curriedFunction;
     };
     return ret;
 }
