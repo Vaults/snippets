@@ -1,4 +1,4 @@
-import {brainfuck} from "../src/brainfuckInterpreter.js";
+import {brainfuckSimple as brainfuck} from "../src/brainfuckInterpreter.js";
 import assert from "assert";
 
 describe("Brainfuck", function () {

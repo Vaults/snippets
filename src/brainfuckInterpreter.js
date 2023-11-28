@@ -1,94 +1,80 @@
-let dataPointer;
-let pointer;
-let output;
-let inp;
-let mem;
-let code;
-
-const toEnd = (input) => input.split("").map(o => o.charCodeAt(0)).reverse();
-const fromEnd = (out) => out.map((o)=>String.fromCharCode(o)).join("");
 const mod = (n,m) => ((n % m) + m) % m;
-//executes commands
-const interpret = () => {
-    const command = code.charAt(pointer);
-    if (command === ">") {
-        dataPointer++;
-    } else if (command === "<") {
-        dataPointer--;
-    } else if (command === "[") {
-        if (accessMem() === 0) {
-            find(false); // right
-        }
-    } else if (command === "]") {
-        if (accessMem() !== 0){
-            find(true); // left
-        }
-    }
-    else if (command === "+") {
-        increment();
-    } else if (command === "-"){
-        decrement();
-    } if (command === ".") {
-        output.push(accessMem())
-    } else if (command === ",") {
-        storeMem(inp.pop());
-    }
-    pointer++;
-};
-//finds matching bracket in direction
-function find(isLeft) {
-    let bc = 1;
-    let m = 0;
-    const dir = (isLeft) ? -1 : 1;
 
-    while (bc > 0) {
-        m += dir;
-        if (code.charAt(pointer + m) === "[") {
-            bc += dir;
-        }
-        if (code.charAt(pointer + m) === "]") {
-            bc -= dir;
-        }
+class BrainfuckInterpreter {
+    constructor(code) {
+        this.code = code
+        this.dataPointer = 0;
+        this.pointer = 0;
+        this.output = [];
+        this.mem = [0];
+        this.input = [];
     }
-    pointer += m + ((isLeft) ? -1 : 0);
-}
+
+    doStep() {
+        const command = this.code.charAt(this.pointer);
+        if (command === ">") { this.dataPointer++;}
+        if (command === "<") { this.dataPointer--; }
+        if (command === "[") { if (this.accessMem() === 0) { this.pointerToBracket(false); } }
+        if (command === "]") { if (this.accessMem() !== 0) { this.pointerToBracket(true); } }
+        if (command === "+") { this.increment(); }
+        if (command === "-") { this.decrement(); }
+        if (command === ".") { this.output.push(this.accessMem()) }
+        if (command === ",") { this.storeMem(this.input.pop()); }
+        this.pointer++;
+    };
+
+    //finds matching bracket in direction
+    pointerToBracket(isLeft) {
+        let bracketCount = 1;
+        let span = 0;
+        const dir = (isLeft) ? -1 : 1;
+
+        while (bracketCount > 0) {
+            span += dir;
+            if (this.code.charAt(this.pointer + span) === "[") {
+                bracketCount += dir;
+            }
+            if (this.code.charAt(this.pointer + span) === "]") {
+                bracketCount -= dir;
+            }
+        }
+        let leftCorrection = (isLeft) ? -1 : 0;
+        this.pointer += span + leftCorrection;
+    }
 
 //helper functions
-function accessMem() {
-    if (mem[dataPointer] === undefined) {
-        mem[dataPointer] = 0;
+    accessMem() {
+        if (this.mem[this.dataPointer] === undefined) {
+            this.mem[this.dataPointer] = 0;
+        }
+        return this.mem[this.dataPointer];
     }
-    return mem[dataPointer];
-}
-function storeMem(inp) {
-    mem[dataPointer] = inp
-}
-function increment() {
-    storeMem(mod((accessMem() + 1), 256));
-}
+    storeMem(inp) {
+        this.mem[this.dataPointer] = inp
+    }
+    increment() {
+        this.storeMem(mod((this.accessMem() + 1), 256));
+    }
 
-function decrement() {
-    storeMem(mod(accessMem() - 1, 256));
-}
+    decrement() {
+        this.storeMem(mod(this.accessMem() - 1, 256));
+    }
 
 
-function brainfuck(c, input = "") {
-    //init constants
-    code = c;
-    dataPointer = 0;
-    pointer = 0;
-    output = [];
-    mem = [0];
-    inp = toEnd(input);
+}
 
+const parseInput = (input) => input.split("").map(o => o.charCodeAt(0)).reverse();
+const parseOutput = (out) => out.map((o)=>String.fromCharCode(o)).join("");
+
+function brainfuckSimple(c, input = "") {
+    let interpreter = new BrainfuckInterpreter(c)
+    interpreter.input = parseInput(input)
     //run through
-    let i = 0;
-    while (pointer < code.length) {
-        i++;
-        interpret(code);
+    while (interpreter.pointer < c.length) {
+        interpreter.doStep()
         //console.log({pointer, dataPointer, mem, output})
     }
-    return fromEnd(output);
+    return parseOutput(interpreter.output);
 }
 
-export {brainfuck}
+export {brainfuckSimple}
