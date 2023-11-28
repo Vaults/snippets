@@ -14,8 +14,8 @@ class BrainfuckInterpreter {
         const command = this.code.charAt(this.pointer);
         if (command === ">") { this.dataPointer++;}
         if (command === "<") { this.dataPointer--; }
-        if (command === "[") { if (this.accessMem() === 0) { this.pointerToBracket(false); } }
-        if (command === "]") { if (this.accessMem() !== 0) { this.pointerToBracket(true); } }
+        if (command === "[") { if (this.accessMem() === 0) { this.pointerToMatchingBracket(false); } }
+        if (command === "]") { if (this.accessMem() !== 0) { this.pointerToMatchingBracket(true); } }
         if (command === "+") { this.increment(); }
         if (command === "-") { this.decrement(); }
         if (command === ".") { this.output.push(this.accessMem()) }
@@ -24,7 +24,7 @@ class BrainfuckInterpreter {
     };
 
     //finds matching bracket in direction
-    pointerToBracket(isLeft) {
+    pointerToMatchingBracket(isLeft) {
         let bracketCount = 1;
         let span = 0;
         const dir = (isLeft) ? -1 : 1;
@@ -42,7 +42,7 @@ class BrainfuckInterpreter {
         this.pointer += span + leftCorrection;
     }
 
-//helper functions
+    //helper functions
     accessMem() {
         if (this.mem[this.dataPointer] === undefined) {
             this.mem[this.dataPointer] = 0;
@@ -60,21 +60,22 @@ class BrainfuckInterpreter {
         this.storeMem(mod(this.accessMem() - 1, 256));
     }
 
-
-}
-
-const parseInput = (input) => input.split("").map(o => o.charCodeAt(0)).reverse();
-const parseOutput = (out) => out.map((o)=>String.fromCharCode(o)).join("");
-
-function brainfuckSimple(c, input = "") {
-    let interpreter = new BrainfuckInterpreter(c)
-    interpreter.input = parseInput(input)
-    //run through
-    while (interpreter.pointer < c.length) {
-        interpreter.doStep()
-        //console.log({pointer, dataPointer, mem, output})
+    isDone(){
+        return this.pointer === this.code.length
     }
-    return parseOutput(interpreter.output);
+
+    acceptChar(char){
+        this.input.push(char.charCodeAt(0))
+    }
+
+    acceptLine(line) {
+        this.input = line.split("").map(o => o.charCodeAt(0)).reverse().concat(this.input)
+    }
+
+    humanReadableOutput(){
+        return this.output.map((o)=>String.fromCharCode(o)).join("")
+    }
+
 }
 
-export {brainfuckSimple}
+export {BrainfuckInterpreter}
