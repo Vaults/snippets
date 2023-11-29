@@ -21,6 +21,9 @@ async function runCharacterByCharacter(interpreter) {
     while (!interpreter.isDone()) {
         interpreter.doStep()
         steps++;
+        if (steps % 1000 === 0) {
+            await sleep(10)
+        }
         process.stdout.write(String.fromCharCode(interpreter.output.pop()))
     }
 }
